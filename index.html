@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title>Secure Locker Application</title>
+  <meta name="description" content="Secure Locker Application">
+  <meta name="author" content="BestSoftWorks">
+  
+  <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="styles/app.css">
+
+</head>
+<body>
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="scripts/app.js"></script>
+
+  
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand" href="#">
+    <img src="images/sla-logo.png" width="160" height="70" class="d-inline-block align-top" alt="">    
+  </a>
+</nav>
+  <div class="container">
+    
+  <h1>Select Your Slot</h1>
+    <div>
+        <div id="LockerSlotsContainer" class="div-container">            
+        </div>
+        
+    <div class="modal fade" id="scanQRCode" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="ScanQRCode" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="max-width: 600px;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="scanQRCodeModalTitle"></h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="alert alert-danger" role="alert" id="scanQRError" style="display: none; font-size: 12px;"></div>
+              <div class="form-group">                
+                <input type="text" class="form-control" id="txtScanQRCode" placeholder="Scan QR Code" style="text-align: center;">
+              </div>
+              <div class="form-group">                
+                <label class="form-control" id="lblUserName" style="text-align: center; font-weight: 700;"></label>
+              </div>
+              <div style="text-align: center;">
+                  <img src="images/qr-code-scanner.jpg" style="max-height: 300px;" />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" id="btnOpenRegister" class="btn btn-primary" style="display: none;">Next</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="registerLockerUser" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="Register" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="max-width: 600px;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Register</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div>
+                <div class="form-group">
+                    <label for="txtStudentId">Student ID</label>
+                    <input type="text" class="form-control" id="txtStudentId" placeholder="Student ID">
+                  </div>
+                  <div class="form-group">
+                    <label for="txtStudentName">Name</label>
+                    <input type="text" class="form-control" id="txtStudentName" placeholder="Name">
+                  </div>
+                  <div class="form-group">
+                    <label for="txtContactNo">Contact No.</label>
+                    <input type="text" class="form-control" id="txtContactNo" placeholder="Contact no.">
+                  </div>
+                  <div class="form-group">
+                    <label for="txtCourse">Course</label>
+                    <select class="form-control" id="ddlCourses"></select>
+                  </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary" id="btnRegister">Register</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="displayAlert" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="Alert" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="max-width: 600px;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Register</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div>
+                  <p >Success.</p>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button"class="btn btn-secondary" data-dismiss="modal" data-toggle="modal" data-target="#displayPayment">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="displayErrorAlert" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="Alert" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered"  role="document" style="max-width: 400px;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" style="color: darkred;">Error!</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div>
+                <div id="errorAlertMessage" class="alert alert-danger" role="alert">You have no subscription on this locker!</div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button"class="btn btn-sm btn-secondary" data-dismiss="modal">OK</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="displayPayment" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="Payment" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="max-width: 600px;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Coin/Bill Acceptor</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div>
+                  <h2>Insert Coin / Peso Bill</h2>
+                  <img src="images/insert-coin.png" style="width: 300px;" />
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="btnCallConfirmation" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="displayPaymentForExtend" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="Payment" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="max-width: 600px;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Coin/Bill Acceptor</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div>
+                  <h4>Your subscription is still ongoing. Should you wish to extend, just insert coin / peso bill.</h4>
+                  <br />
+                  <div style="text-align: center;">
+                    <h3>Insert Coin / Peso Bill</h2>
+                    <img src="images/insert-coin.png" style="width: 300px;" />
+                  </div>
+                  
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="btnCallConfirmation" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" id="btnEndSubscription" class="btn btn-danger" data-dismiss="modal">End Subscription</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="displayConfirmation" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="Confirmation" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="max-width: 600px;">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Payment Successful</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div>
+                  <h3>Coin/Bill accepted successfully.</h3>
+                  <div class="form-group">
+                    <label for="txtStudentName">Selected Locker Slot</label>
+                    <input type="text" class="form-control" id="txtLockerSlot" placeholder="Locker Slot" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="txtStudentName">Name</label>
+                    <input type="text" class="form-control" id="txtDisplayName" placeholder="Name" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="txtStudentName">Bill inserted</label>
+                    <input type="text" class="form-control" id="txtBillAccepted" placeholder="Bill" readonly>
+                  </div>
+                  <div class="form-group">
+                    <label for="txtStudentName">Time</label>
+                    <label class="form-control" id="lblTime">Time</label>
+                  </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id="btnConfirmTransaction" class="btn btn-primary" data-dismiss="modal">Start Time</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
