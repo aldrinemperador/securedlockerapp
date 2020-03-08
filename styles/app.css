@@ -1,0 +1,42 @@
+.buttonStyle {
+    width: 100px;
+    height: 100px;
+    font-size: xx-large;
+}
+
+.buttonStyle-large {
+    width: 100px;
+    height: 200px;
+    font-size: xx-large;
+}
+
+.timerStyle {
+    width: 100px;
+    height: 50px;
+    background-color:wheat;
+    color: green;
+    text-align: center;
+    font-size: xx-large;
+    font-weight: 900;
+}
+
+.timerStyleActive {
+    width: 100px;
+    height: 50px;
+    background-color:wheat;
+    color: firebrick;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 900;
+}
+
+.div-container {
+    display: inline-block;
+}
+
+.div-box{
+    width: 200px;
+    height: 200px;
+    display: block;
+    float: left;
+}
